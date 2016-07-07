@@ -26,7 +26,7 @@ SERVER_OBJ	= $(SERVER_SRC:.c=.o)
 
 CC		= gcc
 
-LDFLAGS		= 
+LDFLAGS		= -L./client/lib/ -lSDL -lSDL_mixer -lSDL_image
 
 CFLAGS		= -W -Wall -Werror -Wextra -g -I./client/include -I./server/include
 

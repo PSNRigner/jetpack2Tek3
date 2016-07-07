@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 09:40:58 2016 loic frasse-mathon
-** Last update Thu Jul  7 17:44:48 2016 loic frasse-mathon
+** Last update Thu Jul  7 17:53:56 2016 loic frasse-mathon
 */
 
 #ifndef SERVER_H_
@@ -19,7 +19,7 @@
 # include <arpa/inet.h>
 # include <ctype.h>
 
-# define CMDS		2
+# define CMDS		3
 # define READ_LEN	4
 
 enum	tile_type
@@ -78,17 +78,20 @@ typedef struct		s_server
 }			t_server;
 
 void		read_map(t_server *, char *);
+void		init_network(t_server *);
+void		remove_player(t_server *, int);
+void		perform_cmd(t_server *, t_player *, char *);
+
+char		**split_str(char *, char);
 int		my_atoi(char *);
 void		my_exit(char *, int);
-void		init_network(t_server *);
-void		cmd_id(t_server *, t_player *, int, char **);
-void		remove_player(t_server *, int);
-char		**split_str(char *, char);
 void		*xmalloc(size_t);
-void		perform_cmd(t_server *, t_player *, char *);
 void		free_tab(char **);
-void		cmd_map(t_server *, t_player *, int, char **);
 int		my_strcmp_case(char *, char *);
 char		*get_next_line(int);
+
+void		cmd_id(t_server *, t_player *, int, char **);
+void		cmd_map(t_server *, t_player *, int, char **);
+void		cmd_ready(t_server *, t_player *, int, char **);
 
 #endif /* !SERVER_H_ */

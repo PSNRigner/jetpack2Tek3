@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 09:40:16 2016 loic frasse-mathon
-** Last update Thu Jul  7 15:15:40 2016 loic frasse-mathon
+** Last update Thu Jul  7 17:54:54 2016 loic frasse-mathon
 */
 
 #include "server.h"
@@ -39,6 +39,7 @@ static void	init_server(t_server *server)
   server->started = 0;
   register_cmd(server, "id", cmd_id);
   register_cmd(server, "map", cmd_map);
+  register_cmd(server, "ready", cmd_ready);
 }
 
 static void	parse_args(t_server *server, int ac, char **av)

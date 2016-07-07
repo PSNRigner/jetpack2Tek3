@@ -5,7 +5,7 @@
 ## Login   <frasse_l@epitech.net>
 ## 
 ## Started on  Thu Jul  7 09:06:02 2016 loic frasse-mathon
-## Last update Thu Jul  7 17:43:31 2016 loic frasse-mathon
+## Last update Thu Jul  7 17:55:40 2016 loic frasse-mathon
 ##
 
 CLIENT_NAME	= clientJ2T3
@@ -22,7 +22,8 @@ SERVER_SRC	= server/src/main.c \
 		server/src/utils2.c \
 		server/src/network.c \
 		server/src/id.c \
-		server/src/get_next_line.c
+		server/src/get_next_line.c \
+		server/src/ready.c
 
 SERVER_OBJ	= $(SERVER_SRC:.c=.o)
 

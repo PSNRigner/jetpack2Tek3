@@ -5,7 +5,7 @@
 ## Login   <frasse_l@epitech.net>
 ## 
 ## Started on  Thu Jul  7 09:06:02 2016 loic frasse-mathon
-## Last update Thu Jul  7 09:29:01 2016 loic frasse-mathon
+## Last update Thu Jul  7 10:44:49 2016 loic frasse-mathon
 ##
 
 CLIENT_NAME	= clientJ2T3
@@ -16,7 +16,9 @@ CLIENT_OBJ	= $(CLIENT_SRC:.c=.o)
 
 SERVER_NAME	= serverJ2T3
 
-SERVER_SRC	= server/src/server.c
+SERVER_SRC	= server/src/main.c \
+		server/src/map.c \
+		server/src/utils.c
 
 SERVER_OBJ	= $(SERVER_SRC:.c=.o)
 
@@ -24,7 +26,7 @@ CC		= gcc
 
 LDFLAGS		= 
 
-CFLAGS		= -W -Wall -Werror -Wextra -03 -g -I./client/include -I./server/include
+CFLAGS		= -W -Wall -Werror -Wextra -g -I./client/include -I./server/include
 
 all:		client server
 
@@ -36,7 +38,7 @@ $(CLIENT_NAME):	$(CLIENT_OBJ)
 		$(CC) -o $(CLIENT_NAME) $(CLIENT_OBJ) $(LDFLAGS)
 
 $(SERVER_NAME):	$(SERVER_OBJ)
-		$(CC) -o $(SERVER_NAME) $(SERVER_OBJ) $(LDFLAGS)
+		$(CC) -o $(SERVER_NAME) $(SERVER_OBJ)
 
 clean:
 		$(RM) $(CLIENT_OBJ) $(SERVER_OBJ)

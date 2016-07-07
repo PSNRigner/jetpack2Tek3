@@ -5,27 +5,43 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 09:40:16 2016 loic frasse-mathon
-** Last update Thu Jul  7 10:38:31 2016 loic frasse-mathon
+** Last update Thu Jul  7 15:15:40 2016 loic frasse-mathon
 */
 
 #include "server.h"
 
-void		my_exit(char *str, int status)
+void	my_exit(char *str, int status)
 {
   if (str)
     printf("%s\n", str);
   exit(status ? 84 : 0);
 }
 
-void		init_server(t_server *server)
+static void	register_cmd(t_server *server, char *name,
+			     void (*func)(t_server *, t_player *,
+					  int, char **))
+{
+  static int	i = 0;
+
+  server->cmds[i].str = name;
+  server->cmds[i].func = (void (*)(void *, void *,
+				   int, char **))func;
+  i++;
+}
+
+static void	init_server(t_server *server)
 {
   server->players = NULL;
   server->port = -1;
   server->gravity = -1;
   server->map = NULL;
+  server->count = 0;
+  server->started = 0;
+  register_cmd(server, "id", cmd_id);
+  register_cmd(server, "map", cmd_map);
 }
 
-void		parse_args(t_server *server, int ac, char **av)
+static void	parse_args(t_server *server, int ac, char **av)
 {
   int		i;
 
@@ -52,6 +68,6 @@ int		main(int ac, char **av)
 
   init_server(&server);
   parse_args(&server, ac, av);
-  printf("%d %d\n", server.map->width, server.map->height);
+  init_network(&server);
   return (0);
 }

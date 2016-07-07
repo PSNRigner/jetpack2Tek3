@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 09:40:58 2016 loic frasse-mathon
-** Last update Thu Jul  7 10:17:56 2016 loic frasse-mathon
+** Last update Thu Jul  7 14:55:49 2016 loic frasse-mathon
 */
 
 #ifndef SERVER_H_
@@ -16,6 +16,9 @@
 # include <stdio.h>
 # include <string.h>
 # include <netinet/in.h>
+# include <arpa/inet.h>
+
+# define CMDS	2
 
 enum	tile_type
   {
@@ -23,6 +26,12 @@ enum	tile_type
     COIN,
     LASER
   };
+
+typedef struct		s_command
+{
+  char			*str;
+  void			(*func)(void *, void *, int, char **);
+}			t_command;
 
 typedef struct		s_str
 {
@@ -52,19 +61,30 @@ typedef struct		s_player
 typedef struct		s_server
 {
   t_player		*players;
+  int			count;
   t_map			*map;
-  struct sockaddr_in    csin;
+  t_command		cmds[CMDS];
   struct sockaddr_in    sin;
   struct protoent       *pe;
-  int			fd;
+  int			sock;
   fd_set                rdfds;
+  fd_set		fds;
   int                   max_fd;
   int			port;
   int			gravity;
+  char			started;
 }			t_server;
 
 void		read_map(t_server *, char *);
 int		my_atoi(char *);
 void		my_exit(char *, int);
+void		init_network(t_server *);
+void		cmd_id(t_server *, t_player *, int, char **);
+void		remove_player(t_server *, int);
+char		**split_str(char *, char);
+void		*xmalloc(size_t);
+void		perform_cmd(t_server *, t_player *, char *);
+void		free_tab(char **);
+void		cmd_map(t_server *, t_player *, int, char **);
 
 #endif /* !SERVER_H_ */

@@ -5,12 +5,12 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 10:05:53 2016 loic frasse-mathon
-** Last update Thu Jul  7 10:43:37 2016 loic frasse-mathon
+** Last update Thu Jul  7 11:11:24 2016 loic frasse-mathon
 */
 
 #include "server.h"
 
-void	free_list(t_str *list)
+static void	free_list(t_str *list)
 {
   if (list)
     {
@@ -20,7 +20,7 @@ void	free_list(t_str *list)
     }
 }
 
-enum tile_type		*tile_str(char *str)
+static enum tile_type	*tile_str(char *str)
 {
   enum tile_type	*tmp;
   int			i;
@@ -37,7 +37,7 @@ enum tile_type		*tile_str(char *str)
   return (tmp);
 }
 
-void		fill_map(t_server *server, t_str *list)
+static void	fill_map(t_server *server, t_str *list)
 {
   t_str		*tmp;
   size_t	i[3];
@@ -66,10 +66,10 @@ void		fill_map(t_server *server, t_str *list)
   free_list(list);
 }
 
-void	add_str(t_str **list, char *buffer)
+static void	add_str(t_str **list, char *buffer)
 {
-  t_str	*new;
-  t_str	*tmp;
+  t_str		*new;
+  t_str		*tmp;
 
   new = malloc(sizeof(t_str));
   new->str = strdup(buffer);
@@ -98,6 +98,7 @@ void	read_map(t_server *server, char *path)
       my_exit(NULL, 1);
     }
   server->map = malloc(sizeof(t_map));
+  list = NULL;
   while (fgets(buffer, 4096, fd) && !feof(fd))
     {
       if (strlen(buffer) > 0 && buffer[strlen(buffer) - 1] == '\n')

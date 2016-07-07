@@ -5,7 +5,7 @@
 ## Login   <frasse_l@epitech.net>
 ## 
 ## Started on  Thu Jul  7 09:06:02 2016 loic frasse-mathon
-## Last update Thu Jul  7 09:11:50 2016 loic frasse-mathon
+## Last update Thu Jul  7 09:29:01 2016 loic frasse-mathon
 ##
 
 CLIENT_NAME	= clientJ2T3
@@ -18,13 +18,13 @@ SERVER_NAME	= serverJ2T3
 
 SERVER_SRC	= server/src/server.c
 
-SERVER_OBJ	= $(SERVER_OBJ:.c=.o)
+SERVER_OBJ	= $(SERVER_SRC:.c=.o)
 
 CC		= gcc
 
 LDFLAGS		= 
 
-CFLAGS		= -W -Wall -Werror -Wextra -03 -g
+CFLAGS		= -W -Wall -Werror -Wextra -03 -g -I./client/include -I./server/include
 
 all:		client server
 

@@ -5,7 +5,7 @@
 ## Login   <frasse_l@epitech.net>
 ## 
 ## Started on  Thu Jul  7 09:06:02 2016 loic frasse-mathon
-## Last update Thu Jul  7 13:37:13 2016 loic frasse-mathon
+## Last update Thu Jul  7 16:17:35 2016 loic frasse-mathon
 ##
 
 CLIENT_NAME	= clientJ2T3
@@ -26,7 +26,7 @@ SERVER_OBJ	= $(SERVER_SRC:.c=.o)
 
 CC		= gcc
 
-LDFLAGS		= -L./client/lib/ -lSDL -lSDL_mixer -lSDL_image
+LDFLAGS		= -L./client/lib/ -lSDL -lpthread -ldl -lm -lX11
 
 CFLAGS		= -W -Wall -Werror -Wextra -g -I./client/include -I./server/include
 

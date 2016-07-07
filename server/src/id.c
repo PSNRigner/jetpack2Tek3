@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 13:33:40 2016 loic frasse-mathon
-** Last update Thu Jul  7 15:16:15 2016 loic frasse-mathon
+** Last update Thu Jul  7 17:17:36 2016 loic frasse-mathon
 */
 
 #include "server.h"
@@ -50,7 +50,7 @@ void	perform_cmd(t_server *server, t_player *player, char *cmd)
   i = 0;
   while (i < CMDS)
     {
-      if (!strcmp(server->cmds[i].str, tab[0]))
+      if (!my_strcmp_case(server->cmds[i].str, tab[0]))
 	{
 	  server->cmds[i].func(server, player, n, tab);
 	  free_tab(tab);

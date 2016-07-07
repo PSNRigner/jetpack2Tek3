@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 10:48:28 2016 loic frasse-mathon
-** Last update Thu Jul  7 15:16:49 2016 loic frasse-mathon
+** Last update Thu Jul  7 17:44:01 2016 loic frasse-mathon
 */
 
 #include "server.h"
@@ -38,11 +38,11 @@ static void	make_socket(t_server *server)
 
 static void	read_command(t_server *server, int sock)
 {
-  char		buffer[4096];
+  char		*buffer;
   int		ret;
   t_player	*tmp;
 
-  if ((ret = read(sock, buffer, 4096)) <= 0)
+  if (!(buffer = get_next_line(sock)) || feof(fdopen(sock, "r")))
     {
       printf("Client disconnected\n");
       remove_player(server, sock);
@@ -50,6 +50,7 @@ static void	read_command(t_server *server, int sock)
       FD_CLR(sock, &server->fds);
       return ;
     }
+  ret = strlen(buffer);
   buffer[ret] = 0;
   if (buffer[ret - 1] == '\n')
     buffer[ret - 1] = 0;
@@ -58,7 +59,7 @@ static void	read_command(t_server *server, int sock)
   tmp = server->players;
   while (tmp && tmp->fd != sock)
     tmp = tmp->next;
-  printf("Received order (id=%d) : %s\n", tmp ? tmp->id : -1, buffer);
+  printf("Received order (id=%d) : '%s'\n", tmp ? tmp->id : -1, buffer);
   if (!tmp)
     return ;
   perform_cmd(server, tmp, buffer);
@@ -66,10 +67,10 @@ static void	read_command(t_server *server, int sock)
 
 static void		add_player(t_server *server, int socket)
 {
-  static int		id = 0;
   t_player		*player;
   t_player		*tmp;
 
+  server->count++;
   player = xmalloc(sizeof(t_player));
   player->fd = socket;
   player->x = 0;
@@ -78,7 +79,7 @@ static void		add_player(t_server *server, int socket)
   player->firing = 0;
   player->ready = 0;
   player->next = NULL;
-  player->id = id++;
+  player->id = server->count;
   tmp = server->players;
   while (tmp && tmp->next)
     tmp = tmp->next;
@@ -86,7 +87,6 @@ static void		add_player(t_server *server, int socket)
     tmp->next = player;
   else
     server->players = player;
-  server->count++;
 }
 
 static void		change(t_server *server, int sock)

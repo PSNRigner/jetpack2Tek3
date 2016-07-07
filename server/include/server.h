@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 09:40:58 2016 loic frasse-mathon
-** Last update Thu Jul  7 14:55:49 2016 loic frasse-mathon
+** Last update Thu Jul  7 17:44:48 2016 loic frasse-mathon
 */
 
 #ifndef SERVER_H_
@@ -17,8 +17,10 @@
 # include <string.h>
 # include <netinet/in.h>
 # include <arpa/inet.h>
+# include <ctype.h>
 
-# define CMDS	2
+# define CMDS		2
+# define READ_LEN	4
 
 enum	tile_type
   {
@@ -86,5 +88,7 @@ void		*xmalloc(size_t);
 void		perform_cmd(t_server *, t_player *, char *);
 void		free_tab(char **);
 void		cmd_map(t_server *, t_player *, int, char **);
+int		my_strcmp_case(char *, char *);
+char		*get_next_line(int);
 
 #endif /* !SERVER_H_ */

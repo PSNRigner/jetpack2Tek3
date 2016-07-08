@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 17:52:53 2016 loic frasse-mathon
-** Last update Fri Jul  8 11:51:40 2016 loic frasse-mathon
+** Last update Fri Jul  8 17:48:36 2016 loic frasse-mathon
 */
 
 #include "server.h"
@@ -39,7 +39,6 @@ void	cmd_fire(t_server *server, t_player *player, int ac, char **av)
 {
   int	fire;
 
-  printf("%d %d %s %s\n", server->started, ac, av[0], av[1]);
   if (!server->started || ac != 2)
     return ;
   fire = my_atoi(av[1]);

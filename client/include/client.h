@@ -1,17 +1,26 @@
+/*
+** client.h for  in /home/frasse_l/Projets/jetpack2Tek3
+** 
+** Made by loic frasse-mathon
+** Login   <frasse_l@epitech.net>
+** 
+** Started on  Fri Jul  8 15:51:20 2016 loic frasse-mathon
+** Last update Fri Jul  8 15:53:31 2016 loic frasse-mathon
+*/
+
 #ifndef CLIENT_H_
 # define CLIENT_H_
 
+# include <stdlib.h>
+# include <stdio.h>
+# include <string.h>
+# include <sys/socket.h>
+# include <arpa/inet.h>
+# include <unistd.h>
+# include <ctype.h>
+# include <SDL/SDL.h>
 
-#include 			<stdlib.h>
-#include 			<stdio.h>
-#include 			<string.h>
-#include 			<sys/socket.h>
-#include 			<arpa/inet.h>
-#include 			<unistd.h>
-#include 			<ctype.h>
-#include 			<SDL/SDL.h>
-
-enum				tile_type
+enum			tile_type
   {
     EMPTY,
     COIN,
@@ -20,25 +29,25 @@ enum				tile_type
 
 typedef struct		s_str
 {
-  char				*str;
+  char			*str;
   struct s_str		*next;
-}					t_str;
+}			t_str;
 
 typedef struct		s_map
 {
-  int				width;
-  int				height;
-  char				**data;
-}					t_map;
+  int			width;
+  int			height;
+  char			**data;
+}			t_map;
 
 typedef struct 		s_client
 {
-	char *			ip;
-	int 			port;
-	int 			socket_cli;
-	int 			id;
-	t_map			*map;
-} 					t_client;
+  char *		ip;
+  int 			port;
+  int 			socket_cli;
+  int 			id;
+  t_map			*map;
+} 			t_client;
 
 void 				my_pause();
 int 				my_display();
@@ -47,6 +56,5 @@ void 				my_exit(char *, int);
 int 				digit_to_int(char);
 void 				get_client_id(t_client *);
 void				read_map(t_client *);
-
 
 #endif /* !CLIENT_H_ */

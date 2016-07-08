@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Fri Jul  8 09:16:26 2016 loic frasse-mathon
-** Last update Fri Jul  8 14:27:46 2016 loic frasse-mathon
+** Last update Fri Jul  8 16:01:00 2016 loic frasse-mathon
 */
 
 #include "server.h"
@@ -15,7 +15,8 @@ static void	move_vertical(t_server *server, t_player *player)
   double	y;
   double	vel;
 
-  player->velocity += server->gravity * -1 * (double)(player->firing * 2 - 1) * (double)TIMEOUT / (double)1000000;
+  player->velocity += server->gravity * -1 * (double)(player->firing * 2 - 1)
+    * (double)TIMEOUT / (double)1000000;
   y = player->y;
   y += player->velocity * (double)TIMEOUT / (double)1000000;
   vel = 0;

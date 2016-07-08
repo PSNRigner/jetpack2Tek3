@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 17:41:46 2016 loic frasse-mathon
-** Last update Thu Jul  7 17:46:08 2016 loic frasse-mathon
+** Last update Fri Jul  8 09:54:18 2016 loic frasse-mathon
 */
 
 #include "server.h"
@@ -16,7 +16,7 @@ static char	*my__strcat(char *str, char buff)
   char		*final;
 
   i = 0;
-  if (!(final = malloc(strlen(str) + 2)))
+  if (!(final = xmalloc(strlen(str) + 2)))
     return (0);
   while (i < strlen(str))
     {
@@ -72,7 +72,7 @@ char		*get_next_line(int fd)
   str = get_unsent(&unsent, &i);
   if (i || (i = 0))
     return (str);
-  if (!(buff = malloc(READ_LEN * sizeof(char))))
+  if (!(buff = xmalloc(READ_LEN * sizeof(char))))
     return (0);
   while ((rc = (read(fd, buff, READ_LEN) + (j = 0))))
     while (j < rc + 0 * (i = i + 1))

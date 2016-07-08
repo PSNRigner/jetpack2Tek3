@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 09:40:16 2016 loic frasse-mathon
-** Last update Thu Jul  7 17:54:54 2016 loic frasse-mathon
+** Last update Fri Jul  8 11:52:28 2016 loic frasse-mathon
 */
 
 #include "server.h"
@@ -39,6 +39,7 @@ static void	init_server(t_server *server)
   server->started = 0;
   register_cmd(server, "id", cmd_id);
   register_cmd(server, "map", cmd_map);
+  register_cmd(server, "fire", cmd_fire);
   register_cmd(server, "ready", cmd_ready);
 }
 
@@ -61,12 +62,16 @@ static void	parse_args(t_server *server, int ac, char **av)
     }
   if (server->port == -1 || server->gravity == -1 || server->map == NULL)
     my_exit("Missing some information to startup.", 1);
+  if (server->port < 0 || server->port > 65535)
+    my_exit("Invalid port", 1);
 }
 
 int		main(int ac, char **av)
 {
   t_server	server;
 
+  g_sock = -1;
+  signal(SIGINT, ctrl_c);
   init_server(&server);
   parse_args(&server, ac, av);
   init_network(&server);

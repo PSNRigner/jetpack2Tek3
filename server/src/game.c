@@ -5,10 +5,29 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Fri Jul  8 09:16:26 2016 loic frasse-mathon
-** Last update Fri Jul  8 10:19:49 2016 loic frasse-mathon
+** Last update Fri Jul  8 14:27:46 2016 loic frasse-mathon
 */
 
 #include "server.h"
+
+static void	move_vertical(t_server *server, t_player *player)
+{
+  double	y;
+  double	vel;
+
+  player->velocity += server->gravity * -1 * (double)(player->firing * 2 - 1) * (double)TIMEOUT / (double)1000000;
+  y = player->y;
+  y += player->velocity * (double)TIMEOUT / (double)1000000;
+  vel = 0;
+  if (y < 0)
+    y = 0;
+  else if (y > server->map->height - 1)
+    y = server->map->height - 1;
+  else
+    vel = player->velocity;
+  player->velocity = vel;
+  player->y = y;
+}
 
 static void	move(t_server *server)
 {
@@ -18,6 +37,8 @@ static void	move(t_server *server)
   diff /= (double)1000000;
   server->players->x += diff;
   server->players->next->x += diff;
+  move_vertical(server, server->players);
+  move_vertical(server, server->players->next);
 }
 
 static void	finish(t_server *server, int id)

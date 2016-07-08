@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 09:40:58 2016 loic frasse-mathon
-** Last update Fri Jul  8 09:51:53 2016 loic frasse-mathon
+** Last update Fri Jul  8 14:42:43 2016 loic frasse-mathon
 */
 
 /*
@@ -15,19 +15,22 @@
 #ifndef SERVER_H_
 # define SERVER_H_
 
+# include <stdio.h>
+# include <ctype.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
 # include <string.h>
-# include <netinet/in.h>
+# include <signal.h>
 # include <arpa/inet.h>
-# include <ctype.h>
+# include <netinet/in.h>
+# include <sys/select.h>
 
-# define CMDS		3
+# define CMDS		4
 # define READ_LEN	4
 # define BUFF_LEN	4096
 # define TIMEOUT	25000
 # define SPEED		5
+
 /*
 ** Enum for map tiles
 */
@@ -76,14 +79,15 @@ typedef struct		s_map
 
 typedef struct		s_player
 {
-  int			fd;
   double		x;
   double		y;
+  int			id;
+  int			fd;
+  char			ready;
   int			score;
   char			firing;
-  char			ready;
+  double		velocity;
   struct s_player	*next;
-  int			id;
 }			t_player;
 
 /*
@@ -92,21 +96,23 @@ typedef struct		s_player
 
 typedef struct		s_server
 {
-  t_player		*players;
-  int			count;
-  t_map			*map;
-  t_command		cmds[CMDS];
-  struct sockaddr_in    sin;
-  struct protoent       *pe;
-  struct timeval	timeout;
-  int			sock;
-  fd_set                rdfds;
   fd_set		fds;
-  int                   max_fd;
+  struct protoent       *pe;
+  struct sockaddr_in    sin;
+  t_map			*map;
   int			port;
+  int			sock;
+  int			count;
+  fd_set                rdfds;
+  int                   max_fd;
   int			gravity;
   char			started;
+  struct timeval	timeout;
+  t_player		*players;
+  t_command		cmds[CMDS];
 }			t_server;
+
+int			g_sock;
 
 /*
 ** Server functions
@@ -123,6 +129,7 @@ void		perform_cmd(t_server *, t_player *, char *);
 ** Utils functions
 */
 
+void		ctrl_c(int);
 int		my_atoi(char *);
 void		*xmalloc(size_t);
 void		free_tab(char **);
@@ -137,6 +144,7 @@ int		my_strcmp_case(char *, char *);
 
 void		cmd_id(t_server *, t_player *, int, char **);
 void		cmd_map(t_server *, t_player *, int, char **);
+void		cmd_fire(t_server *, t_player *, int, char **);
 void		cmd_ready(t_server *, t_player *, int, char **);
 
 #endif /* !SERVER_H_ */

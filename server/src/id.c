@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 13:33:40 2016 loic frasse-mathon
-** Last update Thu Jul  7 17:17:36 2016 loic frasse-mathon
+** Last update Fri Jul  8 14:25:59 2016 loic frasse-mathon
 */
 
 #include "server.h"
@@ -99,15 +99,9 @@ void	cmd_map(t_server *server, t_player *player, int ac, char **av)
 
 void	free_tab(char **tab)
 {
-  int	i;
-
   if (!tab)
     return ;
-  i = 0;
-  while (tab[i])
-    {
-      free(tab[i]);
-      i++;
-    }
+  if (tab[0])
+    free(tab[0]);
   free(tab);
 }

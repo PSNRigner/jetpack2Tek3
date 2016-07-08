@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 17:14:04 2016 loic frasse-mathon
-** Last update Fri Jul  8 09:10:42 2016 loic frasse-mathon
+** Last update Fri Jul  8 11:37:55 2016 loic frasse-mathon
 */
 
 #include "server.h"
@@ -19,4 +19,11 @@ int	my_strcmp_case(char *str1, char *str2)
 	 tolower(str1[i]) == tolower(str2[i]))
     i++;
   return (tolower(str1[i]) - tolower(str2[i]));
+}
+
+void	ctrl_c(int sig)
+{
+  (void)sig;
+  if (g_sock != -1)
+    close(g_sock);
 }

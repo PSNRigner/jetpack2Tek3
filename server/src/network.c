@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 10:48:28 2016 loic frasse-mathon
-** Last update Fri Jul  8 09:37:42 2016 loic frasse-mathon
+** Last update Fri Jul  8 12:00:39 2016 loic frasse-mathon
 */
 
 #include "server.h"
@@ -18,7 +18,7 @@ static void	make_socket(t_server *server)
       perror ("socket");
       my_exit(NULL, 1);
     }
-
+  g_sock = server->sock;
   server->sin.sin_family = AF_INET;
   server->sin.sin_port = htons(server->port);
   server->sin.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -28,7 +28,6 @@ static void	make_socket(t_server *server)
       perror ("bind");
       my_exit(NULL, 1);
     }
-
   if (listen(server->sock, 1) < 0)
     {
       perror ("listen");
@@ -93,7 +92,7 @@ static void		change(t_server *server, int sock)
     read_command(server, sock);
 }
 
-static void	_tick(t_server *server, int ret)
+static void	check(t_server *server, int ret)
 {
   int		i;
 
@@ -125,10 +124,7 @@ void	init_network(t_server *server)
       server->timeout.tv_usec = TIMEOUT;
       if ((ret = select(FD_SETSIZE, &server->rdfds, NULL, NULL,
 			&server->timeout)) < 0)
-	{
-	  perror("select");
-	  my_exit(NULL, 1);
-	}
-      _tick(server, ret);
+	my_exit(NULL, 1);
+      check(server, ret);
     }
 }

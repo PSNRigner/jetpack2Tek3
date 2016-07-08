@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 17:52:53 2016 loic frasse-mathon
-** Last update Fri Jul  8 09:13:29 2016 loic frasse-mathon
+** Last update Fri Jul  8 11:51:40 2016 loic frasse-mathon
 */
 
 #include "server.h"
@@ -19,8 +19,9 @@ void		add_player(t_server *server, int socket)
   player = xmalloc(sizeof(t_player));
   player->fd = socket;
   player->x = 0;
-  player->y = 0;
+  player->y = server->map->height / 2;
   player->score = 0;
+  player->velocity = 0;
   player->firing = 0;
   player->ready = 0;
   player->next = NULL;
@@ -32,6 +33,21 @@ void		add_player(t_server *server, int socket)
     tmp->next = player;
   else
     server->players = player;
+}
+
+void	cmd_fire(t_server *server, t_player *player, int ac, char **av)
+{
+  int	fire;
+
+  printf("%d %d %s %s\n", server->started, ac, av[0], av[1]);
+  if (!server->started || ac != 2)
+    return ;
+  fire = my_atoi(av[1]);
+  if (fire == 0)
+    player->firing = 0;
+  else if (fire == 1)
+    player->firing = 1;
+  (void)server;
 }
 
 void	cmd_ready(t_server *server, t_player *player, int ac, char **av)

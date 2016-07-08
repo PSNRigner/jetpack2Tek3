@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 10:05:53 2016 loic frasse-mathon
-** Last update Thu Jul  7 11:11:24 2016 loic frasse-mathon
+** Last update Fri Jul  8 09:54:28 2016 loic frasse-mathon
 */
 
 #include "server.h"
@@ -25,7 +25,7 @@ static enum tile_type	*tile_str(char *str)
   enum tile_type	*tmp;
   int			i;
 
-  tmp = malloc(sizeof(enum tile_type) * strlen(str));
+  tmp = xmalloc(sizeof(enum tile_type) * strlen(str));
   i = 0;
   while (str[i])
     {
@@ -56,7 +56,7 @@ static void	fill_map(t_server *server, t_str *list)
     }
   server->map->width = i[1];
   server->map->height = i[0];
-  server->map->data = malloc(sizeof(char) * i[0] * i[1]);
+  server->map->data = xmalloc(sizeof(char) * i[0] * i[1]);
   tmp = list;
   while (tmp)
     {
@@ -71,7 +71,7 @@ static void	add_str(t_str **list, char *buffer)
   t_str		*new;
   t_str		*tmp;
 
-  new = malloc(sizeof(t_str));
+  new = xmalloc(sizeof(t_str));
   new->str = strdup(buffer);
   new->next = NULL;
   tmp = *list;
@@ -97,7 +97,7 @@ void	read_map(t_server *server, char *path)
       perror("Error opening file");
       my_exit(NULL, 1);
     }
-  server->map = malloc(sizeof(t_map));
+  server->map = xmalloc(sizeof(t_map));
   list = NULL;
   while (fgets(buffer, 4096, fd) && !feof(fd))
     {

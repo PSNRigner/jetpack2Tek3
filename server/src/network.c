@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 10:48:28 2016 loic frasse-mathon
-** Last update Thu Jul  7 17:44:01 2016 loic frasse-mathon
+** Last update Fri Jul  8 09:37:42 2016 loic frasse-mathon
 */
 
 #include "server.h"
@@ -65,30 +65,6 @@ static void	read_command(t_server *server, int sock)
   perform_cmd(server, tmp, buffer);
 }
 
-static void		add_player(t_server *server, int socket)
-{
-  t_player		*player;
-  t_player		*tmp;
-
-  server->count++;
-  player = xmalloc(sizeof(t_player));
-  player->fd = socket;
-  player->x = 0;
-  player->y = 0;
-  player->score = 0;
-  player->firing = 0;
-  player->ready = 0;
-  player->next = NULL;
-  player->id = server->count;
-  tmp = server->players;
-  while (tmp && tmp->next)
-    tmp = tmp->next;
-  if (tmp)
-    tmp->next = player;
-  else
-    server->players = player;
-}
-
 static void		change(t_server *server, int sock)
 {
   int			new;
@@ -117,28 +93,42 @@ static void		change(t_server *server, int sock)
     read_command(server, sock);
 }
 
+static void	_tick(t_server *server, int ret)
+{
+  int		i;
+
+  if (ret == 0)
+    {
+      tick(server);
+      return ;
+    }
+  i = 0;
+  while (i < FD_SETSIZE)
+    {
+      if (FD_ISSET(i, &server->rdfds))
+	change(server, i);
+      i++;
+    }
+}
+
 void	init_network(t_server *server)
 {
-  int	i;
+  int	ret;
 
   make_socket(server);
   FD_ZERO(&server->fds);
   FD_SET(server->sock, &server->fds);
-  printf("Listening on port %d\n", server->port);
   while (1)
     {
       server->rdfds = server->fds;
-      if (select(FD_SETSIZE, &server->rdfds, NULL, NULL, NULL) < 0)
+      server->timeout.tv_sec = 0;
+      server->timeout.tv_usec = TIMEOUT;
+      if ((ret = select(FD_SETSIZE, &server->rdfds, NULL, NULL,
+			&server->timeout)) < 0)
 	{
 	  perror("select");
 	  my_exit(NULL, 1);
 	}
-      i = 0;
-      while (i < FD_SETSIZE)
-	{
-	  if (FD_ISSET(i, &server->rdfds))
-	    change(server, i);
-	  i++;
-	}
+      _tick(server, ret);
     }
 }

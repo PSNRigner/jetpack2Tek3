@@ -10,7 +10,11 @@
 
 CLIENT_NAME	= clientJ2T3
 
-CLIENT_SRC	= client/src/main.c
+CLIENT_SRC	= client/src/main.c \
+			  client/src/utils.c \
+			  client/src/my_displayer.c \
+			  client/src/get_infos.c \
+			  client/src/map.c
 
 CLIENT_OBJ	= $(CLIENT_SRC:.c=.o)
 

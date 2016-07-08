@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 09:40:58 2016 loic frasse-mathon
-** Last update Fri Jul  8 14:42:43 2016 loic frasse-mathon
+** Last update Fri Jul  8 23:37:07 2016 loic frasse-mathon
 */
 
 /*
@@ -39,7 +39,8 @@ enum	tile_type
   {
     EMPTY,
     COIN,
-    LASER
+    LASER,
+    OLD_COIN
   };
 
 /*
@@ -83,6 +84,7 @@ typedef struct		s_player
   double		y;
   int			id;
   int			fd;
+  char			dead;
   char			ready;
   int			score;
   char			firing;
@@ -119,6 +121,8 @@ int			g_sock;
 */
 
 void		tick(t_server *);
+int		check_end(t_server *);
+void		finish(t_server *, int);
 void		init_network(t_server *);
 void		add_player(t_server *, int);
 void		read_map(t_server *, char *);

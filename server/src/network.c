@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 10:48:28 2016 loic frasse-mathon
-** Last update Fri Jul  8 12:00:39 2016 loic frasse-mathon
+** Last update Fri Jul  8 23:30:55 2016 loic frasse-mathon
 */
 
 #include "server.h"
@@ -58,7 +58,6 @@ static void	read_command(t_server *server, int sock)
   tmp = server->players;
   while (tmp && tmp->fd != sock)
     tmp = tmp->next;
-  printf("Received order (id=%d) : '%s'\n", tmp ? tmp->id : -1, buffer);
   if (!tmp)
     return ;
   perform_cmd(server, tmp, buffer);

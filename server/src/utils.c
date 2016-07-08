@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 09:52:48 2016 loic frasse-mathon
-** Last update Fri Jul  8 14:21:17 2016 loic frasse-mathon
+** Last update Fri Jul  8 23:30:21 2016 loic frasse-mathon
 */
 
 #include "server.h"
@@ -78,4 +78,22 @@ char	**split_str(char *str, char delim)
     }
   tab[i] = 0;
   return (tab);
+}
+
+int	check_end(t_server *server)
+{
+  int	first;
+  int	second;
+
+  first = server->players->x >= server->map->width - 1
+    || server->players->dead;
+  second = server->players->next->x >= server->map->width - 1
+    || server->players->next->dead;
+  if (first || second)
+    {
+      finish(server, first && second ? -1 : (second ? server->players->id
+					     : server->players->next->id));
+      return (1);
+    }
+  return (0);
 }

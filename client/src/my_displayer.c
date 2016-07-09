@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Fri Jul  8 15:58:11 2016 loic frasse-mathon
-** Last update Fri Jul  8 16:02:46 2016 loic frasse-mathon
+** Last update Sat Jul  9 14:38:59 2016 loic frasse-mathon
 */
 
 #include "client.h"
@@ -51,15 +51,10 @@ void  puts_dots(t_client *client, SDL_Surface *ecran)
   int   j;
   int   x;
   int   y;
-  int   posx;
-  int   posy;
-  
+
   i = 0;
   x = 0;
   y = 0;
-  posx = 16;
-  posy = 16;
-
   while(i < client->map->height)
   {
     j = 0;
@@ -67,18 +62,18 @@ void  puts_dots(t_client *client, SDL_Surface *ecran)
     {
       if (client->map->data[i][j] == 'e')
       {
-        position.x = j * posx;
-        position.y = i * posy - 8;
-        electric_field[x] = SDL_CreateRGBSurface(SDL_HWSURFACE, 16, 16, 32, 0, 0, 0, 0);
+        position.x = j * SIZE;
+        position.y = i * SIZE;
+        electric_field[x] = SDL_CreateRGBSurface(SDL_HWSURFACE, SIZE, SIZE, 32, 0, 0, 0, 0);
         SDL_FillRect(electric_field[x], NULL, SDL_MapRGB(ecran->format, 0, 100, 150));
         SDL_BlitSurface(electric_field[x], NULL, ecran, &position); 
         x++;
       }
       else if(client->map->data[i][j] == 'c')
       {
-        position.x = j * posx;
-        position.y = i * posy - 8;
-        coins[y] = SDL_CreateRGBSurface(SDL_HWSURFACE, 16, 16, 32, 0, 0, 0, 0);
+        position.x = j * SIZE;
+        position.y = i * SIZE;
+        coins[y] = SDL_CreateRGBSurface(SDL_HWSURFACE, SIZE, SIZE, 32, 0, 0, 0, 0);
         SDL_FillRect(coins[y], NULL, SDL_MapRGB(ecran->format, 255, 255, 0));
         SDL_BlitSurface(coins[y], NULL, ecran, &position);
         y++; 
@@ -97,8 +92,8 @@ int		my_display(t_client *client)
   SDL_Init(SDL_INIT_VIDEO);
   set_window_pos(client);
 
-  ecran = SDL_SetVideoMode(client->map->width * 16,
-			   client->map->height * 16, 32, SDL_RESIZABLE);
+  ecran = SDL_SetVideoMode(client->map->width * SIZE,
+			   client->map->height * SIZE, 32, SDL_RESIZABLE);
 
   if (ecran == NULL)
       my_exit("Impossible de charger le mode vidéo", 1);

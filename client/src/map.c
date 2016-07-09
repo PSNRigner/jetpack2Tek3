@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Fri Jul  8 15:56:05 2016 loic frasse-mathon
-** Last update Fri Jul  8 15:57:15 2016 loic frasse-mathon
+** Last update Sat Jul  9 14:35:24 2016 loic frasse-mathon
 */
 
 #include "client.h"
@@ -25,12 +25,13 @@ void	get_map_infos(char *buffer, t_map *map)
   	  i++;
   	  while (isdigit(buffer[++i]))
   	    size[x++] = buffer[i];
+  	  size[x] = '\0';
   	  map->width = atoi(size);
-  	  size[0] = '\0';
   	  i++;
   	  x = 0;
   	  while (isdigit(buffer[i]))
   	    size[x++] = buffer[i++];
+  	  size[x] = '\0';
   	  map->height = atoi(size);
   	}
     }
@@ -49,7 +50,7 @@ char  *get_first_line(char *buffer, t_map *map, int *i)
       str[x++] = buffer[*i];
     (*i)++;
   }
-  str[*i] = '\0';
+  str[x] = '\0';
   return (str);
 }
 
@@ -62,10 +63,9 @@ void	get_map_data(char *buffer, t_map *map)
 
   i = 1;
   x = 0;
-  tab = malloc(sizeof(char) * map->height);
+  tab = malloc(sizeof(char *) * map->height);
   tab[0] = get_first_line(buffer, map, &x);
-  //printf("%s\n",tab[0]);
-  while (i <= map->height)
+  while (i < map->height)
     {
       j = 0;
       tab[i] = malloc(sizeof(char) * map->width);
@@ -78,7 +78,6 @@ void	get_map_data(char *buffer, t_map *map)
       i++;
     }
   map->data = tab;
-//  display_map(tab, map->width, map->height);exit(1);
 }
 
 void	display_map(char **map, int width, int height)

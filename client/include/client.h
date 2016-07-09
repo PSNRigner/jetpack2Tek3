@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Fri Jul  8 15:51:20 2016 loic frasse-mathon
-** Last update Fri Jul  8 15:53:31 2016 loic frasse-mathon
+** Last update Sat Jul  9 14:39:27 2016 loic frasse-mathon
 */
 
 #ifndef CLIENT_H_
@@ -19,6 +19,8 @@
 # include <unistd.h>
 # include <ctype.h>
 # include <SDL/SDL.h>
+
+# define SIZE		19
 
 enum			tile_type
   {

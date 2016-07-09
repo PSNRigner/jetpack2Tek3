@@ -25,7 +25,7 @@ void	get_client_id(t_client *client)
   while (server_reply[i])
     {
       if (isdigit(server_reply[i]))
-	client->id = digit_to_int(server_reply[i]);
+	       client->id = digit_to_int(server_reply[i]);
       ++i;
     }
 }

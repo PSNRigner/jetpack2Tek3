@@ -297,7 +297,7 @@ class norme:
         if not user:
             user_list.append(os.getenv('USER'))
         for user_name in user_list:
-            f = open("/home/frasse_l/Util/passwd", 'r')
+            f = open("norme/passwd", 'r')
             while 1:
                 line = f.readline()
                 if line:

@@ -45,14 +45,16 @@ void		my_connect(t_client *client)
     client->socket_cli = socket(AF_INET , SOCK_STREAM , 0);
     if (client->socket_cli == -1)
       my_exit("Could not create socket", 1);
-    puts("Socket created");
+    else
+        puts("Socket created");
     server.sin_addr.s_addr = inet_addr(client->ip);
     server.sin_family = AF_INET;
     server.sin_port = htons(client->port);
     if (connect(client->socket_cli, (struct sockaddr *)&server,
 		sizeof(server)) < 0)
-      my_exit("Could not create socket", 1);
-    puts("Connected");
+      my_exit("Could not connect socket", 1);
+    else
+        puts("Connected");
     get_client_id(client);
     read_map(client);
 }
@@ -70,5 +72,6 @@ int		main(int ac, char **av)
   parse_args(&client, ac, av);
   my_connect(&client);
   my_display(&client);
+
   return (0);
 }

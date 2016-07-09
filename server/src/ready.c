@@ -5,13 +5,14 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 17:52:53 2016 loic frasse-mathon
-** Last update Fri Jul  8 17:51:03 2016 loic frasse-mathon
+** Last update Sat Jul  9 09:59:49 2016 loic frasse-mathon
 */
 
 #include "server.h"
 
 void		add_player(t_server *server, int socket)
 {
+  static int	id = 0;
   t_player	*player;
   t_player	*tmp;
 
@@ -26,7 +27,7 @@ void		add_player(t_server *server, int socket)
   player->ready = 0;
   player->next = NULL;
   player->dead = 0;
-  player->id = server->count;
+  player->id = ++id;
   tmp = server->players;
   while (tmp && tmp->next)
     tmp = tmp->next;

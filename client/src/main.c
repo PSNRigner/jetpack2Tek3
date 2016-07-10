@@ -47,6 +47,8 @@ void		my_connect(t_client *client)
       my_exit("Could not create socket", 1);
     else
         puts("Socket created");
+    if (strcmp(client->ip, "localhost") == 0)
+        client->ip = "127.0.0.1";
     server.sin_addr.s_addr = inet_addr(client->ip);
     server.sin_family = AF_INET;
     server.sin_port = htons(client->port);
@@ -67,10 +69,13 @@ void		my_client_core(t_client *client)
 int		main(int ac, char **av)
 {
   t_client	client;
+  fd_set    fds;
 
   init_client(&client);
   parse_args(&client, ac, av);
+  FD_ZERO(&fds);
   my_connect(&client);
+  
   my_display(&client);
 
   return (0);

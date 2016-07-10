@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Fri Jul  8 15:51:20 2016 loic frasse-mathon
-** Last update Sat Jul  9 14:39:27 2016 loic frasse-mathon
+** Last update Sun Jul 10 20:37:57 2016 loic frasse-mathon
 */
 
 #ifndef CLIENT_H_
@@ -52,7 +52,7 @@ typedef struct 		s_client
 } 			t_client;
 
 void 				my_pause();
-int 				my_display();
+int 				my_display(t_client *);
 void				display_map(char **, int, int);
 void 				my_exit(char *, int);
 int 				digit_to_int(char);

@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Fri Jul  8 15:56:05 2016 loic frasse-mathon
-** Last update Sat Jul  9 14:35:24 2016 loic frasse-mathon
+** Last update Sun Jul 10 20:37:29 2016 loic frasse-mathon
 */
 
 #include "client.h"
@@ -37,19 +37,19 @@ void	get_map_infos(char *buffer, t_map *map)
     }
 }
 
-char  *get_first_line(char *buffer, t_map *map, int *i)
+char	*get_first_line(char *buffer, t_map *map, int *i)
 {
-  int   x;
-  char  *str;
+  int	x;
+  char	*str;
 
   x = 0;
   str = malloc(sizeof(char) * map->width + 1);
   while (x < map->width)
-  {
-    if (buffer[*i] == '_' || buffer[*i] == 'e' || buffer[*i] == 'c')
-      str[x++] = buffer[*i];
-    (*i)++;
-  }
+    {
+      if (buffer[*i] == '_' || buffer[*i] == 'e' || buffer[*i] == 'c')
+	str[x++] = buffer[*i];
+      (*i)++;
+    }
   str[x] = '\0';
   return (str);
 }

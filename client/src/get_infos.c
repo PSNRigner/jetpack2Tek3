@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Fri Jul  8 15:53:39 2016 loic frasse-mathon
-** Last update Fri Jul  8 15:54:22 2016 loic frasse-mathon
+** Last update Sun Jul 10 20:36:23 2016 loic frasse-mathon
 */
 
 #include "client.h"
@@ -25,7 +25,7 @@ void	get_client_id(t_client *client)
   while (server_reply[i])
     {
       if (isdigit(server_reply[i]))
-	       client->id = digit_to_int(server_reply[i]);
+	client->id = digit_to_int(server_reply[i]);
       ++i;
     }
 }

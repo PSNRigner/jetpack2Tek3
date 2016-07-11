@@ -5,18 +5,20 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Fri Jul  8 15:54:36 2016 loic frasse-mathon
-** Last update Fri Jul  8 15:55:56 2016 loic frasse-mathon
+** Last update Mon Jul 11 11:27:49 2016 loic frasse-mathon
 */
 
 #include "client.h"
 
-static void     init_client(t_client *client)
+static void	init_client(t_client *client)
 {
   client->ip = NULL;
   client->port = -1;
   client->socket_cli = -1;
   client->id = -1;
   client->map = NULL;
+  client->received = 0;
+  client->started = 0;
 }
 
 static void	parse_args(t_client *client, int ac, char **av)
@@ -40,43 +42,47 @@ static void	parse_args(t_client *client, int ac, char **av)
 
 void		my_connect(t_client *client)
 {
-    struct	sockaddr_in server;
+  struct	sockaddr_in server;
 
-    client->socket_cli = socket(AF_INET , SOCK_STREAM , 0);
-    if (client->socket_cli == -1)
-      my_exit("Could not create socket", 1);
-    else
-        puts("Socket created");
-    if (strcmp(client->ip, "localhost") == 0)
-        client->ip = "127.0.0.1";
-    server.sin_addr.s_addr = inet_addr(client->ip);
-    server.sin_family = AF_INET;
-    server.sin_port = htons(client->port);
-    if (connect(client->socket_cli, (struct sockaddr *)&server,
-		sizeof(server)) < 0)
-      my_exit("Could not connect socket", 1);
-    else
-        puts("Connected");
-    get_client_id(client);
-    read_map(client);
+  client->socket_cli = socket(AF_INET , SOCK_STREAM , 0);
+  if (client->socket_cli == -1)
+    my_exit("Could not create socket", 1);
+  if (strcmp(client->ip, "localhost") == 0)
+    client->ip = "127.0.0.1";
+  server.sin_addr.s_addr = inet_addr(client->ip);
+  server.sin_family = AF_INET;
+  server.sin_port = htons(client->port);
+  if (connect(client->socket_cli, (struct sockaddr *)&server,
+	      sizeof(server)) < 0)
+    my_exit("Could not connect socket", 1);
+  dprintf(client->socket_cli, "ID\nMAP\n");
+  if (pthread_create(&client->thread, NULL,
+		     (void *(*)(void *))my_display, client))
+    my_exit("Thread creation error", 1);
+  my_select(client);
 }
 
-void		my_client_core(t_client *client)
+void		register_command(t_client *client, char *str,
+				 void (*func)(t_client *, int, char **))
 {
-  printf("%i\n", client->id);
+  static int	id = 0;
+
+  client->commands[id].str = str;
+  client->commands[id].func = (void (*)(void *, int, char **))func;
+  id++;
 }
 
 int		main(int ac, char **av)
 {
-  t_client	client;
-  fd_set    fds;
+  t_client	*client;
 
-  init_client(&client);
-  parse_args(&client, ac, av);
-  FD_ZERO(&fds);
-  my_connect(&client);
-  
-  my_display(&client);
+  client = xmalloc(sizeof(t_client));
+  init_client(client);
+  register_command(client, "id", cmd_id);
+  register_command(client, "map", cmd_map);
+  register_command(client, "start", cmd_start);
+  parse_args(client, ac, av);
+  my_connect(client);
 
   return (0);
 }

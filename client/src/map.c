@@ -10,23 +10,6 @@
 
 #include "client.h"
 
-char	*get_first_line(char *buffer, t_map *map, int *i)
-{
-  int	x;
-  char	*str;
-
-  x = 0;
-  str = xmalloc(sizeof(char) * map->width + 1);
-  while (x < map->width)
-    {
-      if (buffer[*i] == '_' || buffer[*i] == 'e' || buffer[*i] == 'c')
-	str[x++] = buffer[*i];
-      (*i)++;
-    }
-  str[x] = '\0';
-  return (str);
-}
-
 void	get_map_data(char *buffer, t_map *map)
 {
   char	**tab;

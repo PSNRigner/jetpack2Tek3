@@ -19,6 +19,7 @@ static void	init_client(t_client *client)
   client->map = NULL;
   client->received = 0;
   client->started = 0;
+  client->players = NULL;
 }
 
 static void	parse_args(t_client *client, int ac, char **av)
@@ -81,6 +82,7 @@ int		main(int ac, char **av)
   register_command(client, "id", cmd_id);
   register_command(client, "map", cmd_map);
   register_command(client, "start", cmd_start);
+  register_command(client, "player", cmd_player);
   parse_args(client, ac, av);
   my_connect(client);
 

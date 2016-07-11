@@ -10,36 +10,6 @@
 
 #include "client.h"
 
-void	set_window_pos(t_client *client)
-{
-  if (client->id == 1)
-    putenv("SDL_VIDEO_WINDOW_POS=0,0");
-  else
-    putenv("SDL_VIDEO_WINDOW_POS=0,400");
-}
-
-int	get_nb_elem(t_client *client, char c)
-{
-  int	i;
-  int	j;
-  int	nb;
-
-  i = 0;
-  nb = 0;
-  while (client->map && client->map->data && i < client->map->height)
-    {
-      j = 0;
-      while (j < client->map->width)
-	{
-	  if (client->map->data[i][j] == c)
-	    nb++;
-	  j++;
-	}
-      i++;
-    }
-  return (nb);
-}
-
 void		puts_dots(t_client *client, SDL_Surface *ecran)
 {
   SDL_Rect	position;
@@ -83,6 +53,23 @@ void		puts_dots(t_client *client, SDL_Surface *ecran)
     }
 }
 
+void    create_players(t_client *client, SDL_Surface *ecran)
+{
+  SDL_Rect      position;
+  SDL_Surface   *player[2] = {NULL};
+
+  position.x = 0;
+  position.y = client->map->height * SIZE - SIZE;
+  player[0] = SDL_CreateRGBSurface(SDL_HWSURFACE, SIZE, SIZE, 32, 0, 0, 0, 0);
+  SDL_FillRect(player[0], NULL, SDL_MapRGB(ecran->format, 0, 255, 0));
+  SDL_BlitSurface(player[0], NULL, ecran, &position);
+  position.x = 0;
+  position.y = client->map->height * SIZE - SIZE;
+  player[1] = SDL_CreateRGBSurface(SDL_HWSURFACE, SIZE, SIZE, 32, 0, 0, 0, 0);
+  SDL_FillRect(player[1], NULL, SDL_MapRGB(ecran->format, 255, 0, 0));
+  SDL_BlitSurface(player[1], NULL, ecran, &position);
+}
+
 void		my_display(t_client *client)
 {
   SDL_Surface	*ecran;
@@ -98,6 +85,7 @@ void		my_display(t_client *client)
     my_exit("Impossible de charger le mode vidéo", 1);
   SDL_WM_SetCaption("JetPack2Tek3", NULL);
   puts_dots(client, ecran);
+  create_players(client, ecran);
   SDL_Flip(ecran);
   my_pause(client, ecran);
   SDL_Quit();

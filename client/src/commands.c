@@ -44,3 +44,33 @@ void	cmd_start(t_client *client, int ac, char **av)
   (void)av;
   client->started = 1;
 }
+
+void  cmd_player(t_client *client, int ac, char **av)
+{
+  t_player  *player;
+  t_player  *tmp;
+  int       id;
+
+  if (ac != 5)
+  return ;
+  id = my_atoi(av[1]);
+  player = client->players;
+  tmp = NULL;
+  while (player)
+  {
+    if (player->id == id)
+      tmp = player;
+    player = player->next;
+  }
+  if (tmp == NULL)
+  {
+    tmp = xmalloc(sizeof(t_player));
+    tmp->next = client->players;
+    client->players = tmp;
+  }
+  tmp->id = id;
+  tmp->x = my_atof(av[2]);
+  tmp->y = my_atof(av[3]);
+  tmp->score = my_atoi(av[4]);
+  
+}

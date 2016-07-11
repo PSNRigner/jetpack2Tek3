@@ -23,7 +23,7 @@
 # include <pthread.h>
 
 # define SIZE		19
-# define COMMANDS	3
+# define COMMANDS	4
 # define READ_LEN	4
 
 enum			tile_type
@@ -45,6 +45,15 @@ typedef struct		s_str
   struct s_str		*next;
 }			t_str;
 
+typedef struct  	s_player
+{
+	int 			id;
+	double 			x;
+	double 			y;
+	int 			score;
+	struct s_player *next;
+}			t_player;
+
 typedef struct		s_map
 {
   int			width;
@@ -64,6 +73,7 @@ typedef struct 		s_client
   char			started;
   char			received;
   int 			socket_cli;
+  t_player		*players;
   t_command		commands[COMMANDS];
 } 			t_client;
 
@@ -82,6 +92,9 @@ int		my_strcmp_case(char *, char *);
 void		cmd_id(t_client *, int, char **);
 void		cmd_map(t_client *, int, char **);
 void		cmd_start(t_client *, int, char **);
+void		cmd_player(t_client *, int, char **);
 void		read_map(t_client *, int, int, char *);
+int 		get_nb_elem(t_client *, char);
+void  		set_window_pos(t_client *);
 
 #endif /* !CLIENT_H_ */

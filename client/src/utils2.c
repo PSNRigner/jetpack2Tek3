@@ -44,3 +44,33 @@ int	my_strcmp_case(char *str1, char *str2)
     i++;
   return (tolower(str1[i]) - tolower(str2[i]));
 }
+
+void  set_window_pos(t_client *client)
+{
+  if (client->id == 1)
+    putenv("SDL_VIDEO_WINDOW_POS=0,0");
+  else
+    putenv("SDL_VIDEO_WINDOW_POS=0,400");
+}
+
+int get_nb_elem(t_client *client, char c)
+{
+  int i;
+  int j;
+  int nb;
+
+  i = 0;
+  nb = 0;
+  while (client->map && client->map->data && i < client->map->height)
+    {
+      j = 0;
+      while (j < client->map->width)
+  {
+    if (client->map->data[i][j] == c)
+      nb++;
+    j++;
+  }
+      i++;
+    }
+  return (nb);
+}

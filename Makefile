@@ -5,7 +5,7 @@
 ## Login   <frasse_l@epitech.net>
 ## 
 ## Started on  Thu Jul  7 09:06:02 2016 loic frasse-mathon
-## Last update Mon Jul 11 10:19:14 2016 loic frasse-mathon
+## Last update Mon Jul 11 11:38:25 2016 loic frasse-mathon
 ##
 
 CLIENT_NAME	= clientJ2T3
@@ -13,7 +13,6 @@ CLIENT_NAME	= clientJ2T3
 CLIENT_SRC	= client/src/main.c \
 		client/src/utils.c \
 		client/src/my_displayer.c \
-		client/src/get_infos.c \
 		client/src/map.c \
 		client/src/select.c \
 		client/src/get_next_line.c \

@@ -13,42 +13,29 @@
 void		puts_dots(t_client *client, SDL_Surface *ecran)
 {
   SDL_Rect	position;
-  SDL_Surface	*electric_field[get_nb_elem(client, 'e')];
-  SDL_Surface	*coins[get_nb_elem(client, 'c')];
+  SDL_Surface	*tmp;
   int		i;
   int		j;
-  int		x;
-  int		y;
 
-  SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format, 0, 0, 102));
   i = 0;
-  x = 0;
-  y = 0;
   while (client->map && client->map->data && i < client->map->height)
     {
       j = 0;
       while (j < client->map->width)
-	{
-	  if (client->map->data[i][j] == 'e')
-	    {
-	      position.x = j * SIZE;
-	      position.y = i * SIZE;
-	      electric_field[x] = SDL_CreateRGBSurface(SDL_HWSURFACE, SIZE, SIZE, 32, 0, 0, 0, 0);
-	      SDL_FillRect(electric_field[x], NULL, SDL_MapRGB(ecran->format, 0, 100, 150));
-	      SDL_BlitSurface(electric_field[x], NULL, ecran, &position);
-	      x++;
-	    }
-	  else if (client->map->data[i][j] == 'c')
-	    {
-	      position.x = j * SIZE;
-	      position.y = i * SIZE;
-	      coins[y] = SDL_CreateRGBSurface(SDL_HWSURFACE, SIZE, SIZE, 32, 0, 0, 0, 0);
-	      SDL_FillRect(coins[y], NULL, SDL_MapRGB(ecran->format, 255, 255, 0));
-	      SDL_BlitSurface(coins[y], NULL, ecran, &position);
-	      y++;
-	    }
-	  j++;
-	}
+    	 {
+        position.x = j * SIZE;
+        position.y = i * SIZE;
+        tmp = SDL_CreateRGBSurface(SDL_HWSURFACE, SIZE, SIZE, 32, 0, 0, 0, 0);
+    	  if (client->map->data[i][j] == 'e')
+    	      SDL_FillRect(tmp, NULL, SDL_MapRGB(ecran->format, 0, 100, 150));
+        else if (client->map->data[i][j] == 'c')
+            SDL_FillRect(tmp, NULL, SDL_MapRGB(ecran->format, 255, 255, 0));
+        else
+          SDL_FillRect(tmp, NULL, SDL_MapRGB(ecran->format, 0, 0, 102));
+        SDL_BlitSurface(tmp, NULL, ecran, &position);
+        tmp = NULL;
+    	  j++;
+    	}
       i++;
     }
 }
@@ -56,18 +43,22 @@ void		puts_dots(t_client *client, SDL_Surface *ecran)
 void    create_players(t_client *client, SDL_Surface *ecran)
 {
   SDL_Rect      position;
-  SDL_Surface   *player[2] = {NULL};
+  SDL_Surface   *player;
+  t_player      *tmp;
 
+  tmp = client->players;
   position.x = 0;
   position.y = client->map->height * SIZE - SIZE;
-  player[0] = SDL_CreateRGBSurface(SDL_HWSURFACE, SIZE, SIZE, 32, 0, 0, 0, 0);
-  SDL_FillRect(player[0], NULL, SDL_MapRGB(ecran->format, 0, 255, 0));
-  SDL_BlitSurface(player[0], NULL, ecran, &position);
-  position.x = 0;
-  position.y = client->map->height * SIZE - SIZE;
-  player[1] = SDL_CreateRGBSurface(SDL_HWSURFACE, SIZE, SIZE, 32, 0, 0, 0, 0);
-  SDL_FillRect(player[1], NULL, SDL_MapRGB(ecran->format, 255, 0, 0));
-  SDL_BlitSurface(player[1], NULL, ecran, &position);
+  while  (tmp)
+  {
+    player = SDL_CreateRGBSurface(SDL_HWSURFACE, SIZE, SIZE, 32, 0, 0, 0, 0);
+    if (tmp->id == 1)
+      SDL_FillRect(player, NULL, SDL_MapRGB(ecran->format, 0, 255, 0));
+    else
+      SDL_FillRect(player, NULL, SDL_MapRGB(ecran->format, 255, 0, 0));
+    SDL_BlitSurface(player, NULL, ecran, &position);
+    tmp = tmp->next;
+  }
 }
 
 void		my_display(t_client *client)
@@ -75,7 +66,7 @@ void		my_display(t_client *client)
   SDL_Surface	*ecran;
   int		size[2];
 
-  size[0] = client->map ? client->map->width * SIZE : 96 * SIZE;
+  size[0] = client->map ? client->map->width * SIZE : 95 * SIZE;
   size[1] = client->map ? client->map->height * SIZE : 10 * SIZE;
   ecran = NULL;
   SDL_Init(SDL_INIT_VIDEO);
@@ -101,7 +92,14 @@ void		my_pause(t_client *client, SDL_Surface *ecran)
     {
       SDL_PollEvent(&event);
       if (event.type == SDL_QUIT)
-	continuer = 0;
+	       continuer = 0;
+       else if (event.type == SDL_KEYDOWN)
+        {
+          //if (event.key.keysym.sym == SDLK_SPACE)
+            //dprintf(client->socket_cli, "FIRE 1\n");
+        }
+      else if (event.type == SDL_KEYUP)
+        dprintf(client->socket_cli, "FIRE 0\n");
       puts_dots(client, ecran);
       usleep(25000);
     }

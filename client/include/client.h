@@ -18,6 +18,7 @@
 # include <arpa/inet.h>
 # include <unistd.h>
 # include <ctype.h>
+# include <pthread.h>
 # include <SDL/SDL.h>
 
 # define SIZE		19

@@ -34,7 +34,7 @@ SERVER_OBJ	= $(SERVER_SRC:.c=.o)
 
 CC		= gcc
 
-LDFLAGS		= -L./client/lib/ -lSDL -lpthread -ldl -lm -lX11
+LDFLAGS		= -L./client/lib/ -lSDL -lpthread -ldl -lm -lX11 -lpthread
 
 CFLAGS		= -W -Wall -Werror -Wextra -g -I./client/include -I./server/include
 

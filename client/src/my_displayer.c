@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Fri Jul  8 15:58:11 2016 loic frasse-mathon
-** Last update Sun Jul 10 20:40:24 2016 loic frasse-mathon
+** Last update Mon Jul 11 11:16:58 2016 loic frasse-mathon
 */
 
 #include "client.h"
@@ -26,7 +26,7 @@ int	get_nb_elem(t_client *client, char c)
 
   i = 0;
   nb = 0;
-  while (i < client->map->height)
+  while (client->map && client->map->data && i < client->map->height)
     {
       j = 0;
       while (j < client->map->width)
@@ -50,10 +50,11 @@ void		puts_dots(t_client *client, SDL_Surface *ecran)
   int		x;
   int		y;
 
+  SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format, 0, 0, 102));
   i = 0;
   x = 0;
   y = 0;
-  while (i < client->map->height)
+  while (client->map && client->map->data && i < client->map->height)
     {
       j = 0;
       while (j < client->map->width)
@@ -82,28 +83,27 @@ void		puts_dots(t_client *client, SDL_Surface *ecran)
     }
 }
 
-int		my_display(t_client *client)
+void		my_display(t_client *client)
 {
   SDL_Surface	*ecran;
+  int		size[2];
 
+  size[0] = client->map ? client->map->width * SIZE : 96 * SIZE;
+  size[1] = client->map ? client->map->height * SIZE : 10 * SIZE;
   ecran = NULL;
   SDL_Init(SDL_INIT_VIDEO);
   set_window_pos(client);
-  ecran = SDL_SetVideoMode(client->map->width * SIZE,
-			   client->map->height * SIZE, 32, SDL_RESIZABLE);
+  ecran = SDL_SetVideoMode(size[0], size[1], 32, SDL_RESIZABLE);
   if (ecran == NULL)
     my_exit("Impossible de charger le mode vidéo", 1);
   SDL_WM_SetCaption("JetPack2Tek3", NULL);
-  SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format, 0, 0, 102));
   puts_dots(client, ecran);
   SDL_Flip(ecran);
-  my_pause();
+  my_pause(client, ecran);
   SDL_Quit();
-
-  return (EXIT_SUCCESS);
 }
 
-void		my_pause()
+void		my_pause(t_client *client, SDL_Surface *ecran)
 {
   int		continuer;
   SDL_Event	event;
@@ -111,8 +111,10 @@ void		my_pause()
   continuer = 1;
   while (continuer)
     {
-      SDL_WaitEvent(&event);
+      SDL_PollEvent(&event);
       if (event.type == SDL_QUIT)
 	continuer = 0;
+      puts_dots(client, ecran);
+      usleep(25000);
     }
 }

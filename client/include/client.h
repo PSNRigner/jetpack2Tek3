@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Fri Jul  8 15:51:20 2016 loic frasse-mathon
-** Last update Mon Jul 11 11:28:20 2016 loic frasse-mathon
+** Last update Mon Jul 11 15:16:58 2016 loic frasse-mathon
 */
 
 #ifndef CLIENT_H_
@@ -79,6 +79,7 @@ typedef struct 		s_client
 
 void 		my_pause();
 int		my_atoi(char *);
+double		my_atof(char *);
 void		*xmalloc(size_t);
 int 		digit_to_int(char);
 char		*get_next_line(int);

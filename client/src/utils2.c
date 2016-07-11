@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Mon Jul 11 10:15:35 2016 loic frasse-mathon
-** Last update Mon Jul 11 10:28:18 2016 loic frasse-mathon
+** Last update Mon Jul 11 15:16:39 2016 loic frasse-mathon
 */
 
 #include "client.h"
@@ -53,11 +53,11 @@ void  set_window_pos(t_client *client)
     putenv("SDL_VIDEO_WINDOW_POS=0,400");
 }
 
-int get_nb_elem(t_client *client, char c)
+int	get_nb_elem(t_client *client, char c)
 {
-  int i;
-  int j;
-  int nb;
+  int	i;
+  int	j;
+  int	nb;
 
   i = 0;
   nb = 0;
@@ -65,12 +65,42 @@ int get_nb_elem(t_client *client, char c)
     {
       j = 0;
       while (j < client->map->width)
-  {
-    if (client->map->data[i][j] == c)
-      nb++;
-    j++;
-  }
+	{
+	  if (client->map->data[i][j] == c)
+	    nb++;
+	  j++;
+	}
       i++;
     }
   return (nb);
+}
+
+double		my_atof(char *str)
+{
+  double	n;
+  int		exp;
+  int		ch;
+
+  n = 0;
+  exp = 0;
+  ch = 0;
+  while ((ch = *str++) && isdigit(ch))
+    n = n * 10.0 + (ch - '0');
+  if (ch == '.')
+    while ((ch = *str++) && isdigit(ch))
+      {
+	n = n * 10.0 + (ch - '0');
+	exp = exp - 1;
+      }
+  while (exp > 0)
+    {
+      n *= 10.0;
+      exp--;
+    }
+  while (exp < 0)
+    {
+      n *= 0.1;
+      exp++;
+    }
+  return (n);
 }

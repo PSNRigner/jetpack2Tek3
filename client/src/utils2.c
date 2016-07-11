@@ -47,10 +47,18 @@ int	my_strcmp_case(char *str1, char *str2)
 
 void  set_window_pos(t_client *client)
 {
-  if (client->id == 1)
-    putenv("SDL_VIDEO_WINDOW_POS=0,0");
-  else
-    putenv("SDL_VIDEO_WINDOW_POS=0,400");
+  t_player      *tmp;
+
+  tmp = client->players;
+  
+  while  (tmp)
+  {
+    if (tmp->id == client->id)
+      putenv("SDL_VIDEO_WINDOW_POS=0,0");
+    else
+      putenv("SDL_VIDEO_WINDOW_POS=0,400");
+    tmp = tmp->next;
+  }
 }
 
 int	get_nb_elem(t_client *client, char c)

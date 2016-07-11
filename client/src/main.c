@@ -83,6 +83,8 @@ int		main(int ac, char **av)
   register_command(client, "map", cmd_map);
   register_command(client, "start", cmd_start);
   register_command(client, "player", cmd_player);
+  register_command(client, "coin", cmd_coin);
+  register_command(client, "finish", cmd_finish);
   parse_args(client, ac, av);
   my_connect(client);
 

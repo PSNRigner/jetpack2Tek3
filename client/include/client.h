@@ -23,7 +23,7 @@
 # include <pthread.h>
 
 # define SIZE		19
-# define COMMANDS	4
+# define COMMANDS	6
 # define READ_LEN	4
 
 enum			tile_type
@@ -94,8 +94,11 @@ void		cmd_id(t_client *, int, char **);
 void		cmd_map(t_client *, int, char **);
 void		cmd_start(t_client *, int, char **);
 void		cmd_player(t_client *, int, char **);
+void 		cmd_coin(t_client *, int, char **);
+void 		cmd_finish(t_client *, int , char **);
 void		read_map(t_client *, int, int, char *);
 int 		get_nb_elem(t_client *, char);
 void  		set_window_pos(t_client *);
+void 		create_players(t_client *, SDL_Surface *);
 
 #endif /* !CLIENT_H_ */

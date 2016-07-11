@@ -17,6 +17,7 @@ CLIENT_SRC	= client/src/main.c \
 		client/src/select.c \
 		client/src/get_next_line.c \
 		client/src/commands.c \
+		client/src/commands2.c \
 		client/src/utils2.c
 
 CLIENT_OBJ	= $(CLIENT_SRC:.c=.o)

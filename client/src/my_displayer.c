@@ -38,6 +38,7 @@ void		puts_dots(t_client *client, SDL_Surface *ecran)
     	}
       i++;
     }
+  create_players(client, ecran);
 }
 
 void    create_players(t_client *client, SDL_Surface *ecran)
@@ -47,12 +48,13 @@ void    create_players(t_client *client, SDL_Surface *ecran)
   t_player      *tmp;
 
   tmp = client->players;
-  position.x = 0;
-  position.y = client->map->height * SIZE - SIZE;
-  while  (tmp)
+  
+  while  (tmp && client->map)
   {
+    position.x = tmp->x * SIZE;
+    position.y = (client->map->height - tmp->y - 1) * SIZE;
     player = SDL_CreateRGBSurface(SDL_HWSURFACE, SIZE, SIZE, 32, 0, 0, 0, 0);
-    if (tmp->id == 1)
+    if (tmp->id == client->id)
       SDL_FillRect(player, NULL, SDL_MapRGB(ecran->format, 0, 255, 0));
     else
       SDL_FillRect(player, NULL, SDL_MapRGB(ecran->format, 255, 0, 0));
@@ -76,7 +78,6 @@ void		my_display(t_client *client)
     my_exit("Impossible de charger le mode vidéo", 1);
   SDL_WM_SetCaption("JetPack2Tek3", NULL);
   puts_dots(client, ecran);
-  create_players(client, ecran);
   SDL_Flip(ecran);
   my_pause(client, ecran);
   SDL_Quit();
@@ -93,14 +94,15 @@ void		my_pause(t_client *client, SDL_Surface *ecran)
       SDL_PollEvent(&event);
       if (event.type == SDL_QUIT)
 	       continuer = 0;
-       else if (event.type == SDL_KEYDOWN)
-        {
-          //if (event.key.keysym.sym == SDLK_SPACE)
-            //dprintf(client->socket_cli, "FIRE 1\n");
-        }
+      else if (event.type == SDL_KEYDOWN)
+      {
+        if (event.key.keysym.sym == SDLK_SPACE)
+          dprintf(client->socket_cli, "FIRE 1\n");
+      }
       else if (event.type == SDL_KEYUP)
         dprintf(client->socket_cli, "FIRE 0\n");
       puts_dots(client, ecran);
+      SDL_Flip(ecran);
       usleep(25000);
     }
 }

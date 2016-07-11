@@ -69,8 +69,7 @@ void  cmd_player(t_client *client, int ac, char **av)
     client->players = tmp;
   }
   tmp->id = id;
-  tmp->x = 0;
-  tmp->y = 0;
+  tmp->x = my_atof(av[2]);
+  tmp->y = my_atof(av[3]);
   tmp->score = my_atoi(av[4]);
-  printf("%s\n", av[2]);
 }

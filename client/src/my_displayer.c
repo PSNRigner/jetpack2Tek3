@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Fri Jul  8 15:58:11 2016 loic frasse-mathon
-** Last update Tue Jul 12 12:12:13 2016 loic frasse-mathon
+** Last update Tue Jul 12 12:50:15 2016 loic frasse-mathon
 */
 
 #include "client.h"
@@ -30,12 +30,12 @@ void		puts_dots(t_client *client, SDL_Surface *ecran)
 					     255 : 0, CHECKE ? 150 : CHECKC
 					     ? 0 : 102));
 	  SDL_BlitSurface(tmp, NULL, ecran, &position);
+	  SDL_FreeSurface(tmp);
 	  tmp = NULL;
     	  i[1]++;
     	}
       i[0]++;
     }
-  SDL_FreeSurface(tmp);
   create_players(client, ecran);
 }
 
@@ -62,8 +62,8 @@ void		create_players(t_client *client, SDL_Surface *ecran)
 	SDL_FillRect(player, NULL, SDL_MapRGB(ecran->format, 255, 0, 0));
       SDL_BlitSurface(player, NULL, ecran, &position);
       tmp = tmp->next;
+      SDL_FreeSurface(player);
     }
-  SDL_FreeSurface(player);
   display_score(client, ecran, color);
 }
 

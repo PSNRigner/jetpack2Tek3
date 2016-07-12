@@ -45,10 +45,14 @@ void    create_players(t_client *client, SDL_Surface *ecran)
 {
   SDL_Rect      position;
   SDL_Surface   *player;
+  SDL_Color     color;
+  TTF_Font      *police;
   t_player      *tmp;
 
   tmp = client->players;
-  
+  police = NULL;
+  police = TTF_OpenFont("../font/Sebastiana.otf", 65);
+  color = {255, 255, 255};    
   while  (tmp && client->map)
   {
     position.x = tmp->x * SIZE;
@@ -66,12 +70,14 @@ void    create_players(t_client *client, SDL_Surface *ecran)
 void		my_display(t_client *client)
 {
   SDL_Surface	*ecran;
-  int		size[2];
+  int		       size[2];
 
   size[0] = client->map ? client->map->width * SIZE : 95 * SIZE;
   size[1] = client->map ? client->map->height * SIZE : 10 * SIZE;
   ecran = NULL;
   SDL_Init(SDL_INIT_VIDEO);
+  if(TTF_Init() == -1)
+    my_exit("Erreur d'initialisation de TTF_Init\n", 1);
   set_window_pos(client);
   ecran = SDL_SetVideoMode(size[0], size[1], 32, SDL_RESIZABLE);
   if (ecran == NULL)
@@ -80,6 +86,8 @@ void		my_display(t_client *client)
   puts_dots(client, ecran);
   SDL_Flip(ecran);
   my_pause(client, ecran);
+  TTF_CloseFont(police);
+  TTF_Quit();
   SDL_Quit();
 }
 

@@ -20,6 +20,8 @@
 # include <ctype.h>
 # include <pthread.h>
 # include <SDL/SDL.h>
+# include <SDL/SDL_image.h>
+# include <SDL/SDL_ttf.h>
 # include <pthread.h>
 
 # define SIZE		19

@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Fri Jul  8 15:51:20 2016 loic frasse-mathon
-** Last update Tue Jul 12 09:50:50 2016 loic frasse-mathon
+** Last update Tue Jul 12 12:02:11 2016 loic frasse-mathon
 */
 
 #ifndef CLIENT_H_
@@ -81,7 +81,6 @@ typedef struct 		s_client
   t_command		commands[COMMANDS];
 } 			t_client;
 
-void 		my_pause();
 int		my_atoi(char *);
 double		my_atof(char *);
 void		*xmalloc(size_t);
@@ -92,6 +91,8 @@ void		my_select(t_client *);
 void 		my_display(t_client *);
 void 		get_client_id(t_client *);
 char		**split_str(char *, char);
+void  		set_window_pos(t_client *);
+int 		get_nb_elem(t_client *, char);
 void		display_map(char **, int, int);
 int		my_strcmp_case(char *, char *);
 void		cmd_id(t_client *, int, char **);
@@ -101,9 +102,8 @@ void		cmd_player(t_client *, int, char **);
 void 		cmd_coin(t_client *, int, char **);
 void 		cmd_finish(t_client *, int , char **);
 void		read_map(t_client *, int, int, char *);
-int 		get_nb_elem(t_client *, char);
-void  		set_window_pos(t_client *);
 void 		create_players(t_client *, SDL_Surface *);
-void    display_score(t_client *, SDL_Surface *, SDL_Color);
+void 		my_pause(t_client *client, SDL_Surface *ecran);
+void		display_score(t_client *, SDL_Surface *, SDL_Color);
 
 #endif /* !CLIENT_H_ */

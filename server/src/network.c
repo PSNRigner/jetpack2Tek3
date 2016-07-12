@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 10:48:28 2016 loic frasse-mathon
-** Last update Tue Jul 12 09:29:21 2016 loic frasse-mathon
+** Last update Tue Jul 12 09:54:50 2016 loic frasse-mathon
 */
 
 #include "server.h"
@@ -43,7 +43,6 @@ static void	read_command(t_server *server, int sock)
 
   if (!(buffer = get_next_line(sock)) || feof(fdopen(sock, "r")))
     {
-      printf("Client disconnected\n");
       remove_player(server, sock);
       close(sock);
       FD_CLR(sock, &server->fds);
@@ -78,7 +77,6 @@ static void		change(t_server *server, int sock)
       FD_SET (new, &server->fds);
       if (server->count >= 2)
 	{
-	  printf("Server full\n");
 	  close(new);
 	  return ;
 	}

@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Mon Jul 11 10:15:35 2016 loic frasse-mathon
-** Last update Mon Jul 11 15:16:39 2016 loic frasse-mathon
+** Last update Tue Jul 12 09:57:01 2016 loic frasse-mathon
 */
 
 #include "client.h"
@@ -45,20 +45,19 @@ int	my_strcmp_case(char *str1, char *str2)
   return (tolower(str1[i]) - tolower(str2[i]));
 }
 
-void  set_window_pos(t_client *client)
+void		set_window_pos(t_client *client)
 {
-  t_player      *tmp;
+  t_player	*tmp;
 
   tmp = client->players;
-  
-  while  (tmp)
-  {
-    if (tmp->id == client->id)
-      putenv("SDL_VIDEO_WINDOW_POS=0,0");
-    else
-      putenv("SDL_VIDEO_WINDOW_POS=0,400");
-    tmp = tmp->next;
-  }
+  while (tmp)
+    {
+      if (tmp->id == client->id)
+	putenv("SDL_VIDEO_WINDOW_POS=0,0");
+      else
+	putenv("SDL_VIDEO_WINDOW_POS=0,400");
+      tmp = tmp->next;
+    }
 }
 
 int	get_nb_elem(t_client *client, char c)
@@ -100,15 +99,10 @@ double		my_atof(char *str)
 	n = n * 10.0 + (ch - '0');
 	exp = exp - 1;
       }
-  while (exp > 0)
+  while (exp != 0)
     {
-      n *= 10.0;
-      exp--;
-    }
-  while (exp < 0)
-    {
-      n *= 0.1;
-      exp++;
+      n *= exp > 0 ? 10.0 : 0.1;
+      exp = exp > 0 ? exp - 1 : exp + 1;
     }
   return (n);
 }

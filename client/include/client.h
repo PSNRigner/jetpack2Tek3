@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Fri Jul  8 15:51:20 2016 loic frasse-mathon
-** Last update Tue Jul 12 12:02:11 2016 loic frasse-mathon
+** Last update Tue Jul 12 12:12:46 2016 loic frasse-mathon
 */
 
 #ifndef CLIENT_H_
@@ -27,8 +27,8 @@
 # define SIZE		19
 # define COMMANDS	6
 # define READ_LEN	4
-# define CHECKC		client->map->data[i][j] == 'c'
-# define CHECKE		client->map->data[i][j] == 'e'
+# define CHECKC		client->map->data[i[0]][i[1]] == 'c'
+# define CHECKE		client->map->data[i[0]][i[1]] == 'e'
 
 enum			tile_type
   {

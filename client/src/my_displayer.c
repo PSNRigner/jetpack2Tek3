@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Fri Jul  8 15:58:11 2016 loic frasse-mathon
-** Last update Tue Jul 12 09:51:35 2016 loic frasse-mathon
+** Last update Tue Jul 12 12:12:13 2016 loic frasse-mathon
 */
 
 #include "client.h"
@@ -14,17 +14,16 @@ void		puts_dots(t_client *client, SDL_Surface *ecran)
 {
   SDL_Rect	position;
   SDL_Surface	*tmp;
-  int		i;
-  int		j;
+  int		i[2];
 
-  i = 0;
-  while (client->map && client->map->data && i < client->map->height)
+  i[0] = 0;
+  while (client->map && client->map->data && i[0] < client->map->height)
     {
-      j = 0;
-      while (j < client->map->width)
+      i[1] = 0;
+      while (i[1] < client->map->width)
 	{
-	  position.x = j * SIZE;
-	  position.y = i * SIZE;
+	  position.x = i[1] * SIZE;
+	  position.y = i[0] * SIZE;
 	  tmp = SDL_CreateRGBSurface(SDL_HWSURFACE, SIZE, SIZE, 32, 0, 0, 0, 0);
 	  SDL_FillRect(tmp, NULL, SDL_MapRGB(ecran->format, CHECKC ? 255
 					     : 0, CHECKE ? 100 : CHECKC ?
@@ -32,9 +31,9 @@ void		puts_dots(t_client *client, SDL_Surface *ecran)
 					     ? 0 : 102));
 	  SDL_BlitSurface(tmp, NULL, ecran, &position);
 	  tmp = NULL;
-    	  j++;
+    	  i[1]++;
     	}
-      i++;
+      i[0]++;
     }
   SDL_FreeSurface(tmp);
   create_players(client, ecran);
@@ -42,10 +41,10 @@ void		puts_dots(t_client *client, SDL_Surface *ecran)
 
 void		create_players(t_client *client, SDL_Surface *ecran)
 {
-  SDL_Rect      position;
-  SDL_Surface   *player;
-  t_player      *tmp;
-  SDL_Color     color;
+  SDL_Rect	position;
+  SDL_Surface	*player;
+  t_player	*tmp;
+  SDL_Color	color;
 
   tmp = client->players;
   color.r = 255;
@@ -71,13 +70,13 @@ void		create_players(t_client *client, SDL_Surface *ecran)
 void		my_display(t_client *client)
 {
   SDL_Surface	*ecran;
-  int		       size[2];
+  int		size[2];
 
   size[0] = client->map ? client->map->width * SIZE : 95 * SIZE;
   size[1] = client->map ? client->map->height * SIZE : 10 * SIZE;
   ecran = NULL;
   SDL_Init(SDL_INIT_VIDEO);
-  if(TTF_Init() == -1)
+  if (TTF_Init() == -1)
     my_exit("Erreur d'initialisation de TTF_Init\n", 1);
   set_window_pos(client);
   ecran = SDL_SetVideoMode(size[0], size[1], 32, SDL_RESIZABLE);

@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 09:52:48 2016 loic frasse-mathon
-** Last update Mon Jul 11 10:28:15 2016 loic frasse-mathon
+** Last update Tue Jul 12 09:28:19 2016 loic frasse-mathon
 */
 
 #include "server.h"
@@ -84,15 +84,22 @@ int	check_end(t_server *server)
 {
   int	first;
   int	second;
+  int	score;
 
-  first = server->players->x >= server->map->width - 1
-    || server->players->dead;
-  second = server->players->next->x >= server->map->width - 1
-    || server->players->next->dead;
+  first = 0;
+  second = 0;
+  first |= server->players->x >= server->map->width - 1;
+  first |= 2 * server->players->dead;
+  second |= server->players->next->x >= server->map->width - 1;
+  second |= 2 * server->players->next->dead;
+  score = server->players->score > server->players->next->score ?
+    server->players->id : (server->players->score < server->players->next->score
+			   ? server->players->next->id : -1);
   if (first || second)
     {
-      finish(server, first && second ? -1 : (second ? server->players->id
-					     : server->players->next->id));
+      finish(server, first & 1 && second & 1 ? score :
+	     (first && second ? -1 : (second ? server->players->id
+				      : server->players->next->id)));
       return (1);
     }
   return (0);

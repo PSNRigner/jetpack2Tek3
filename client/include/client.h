@@ -104,5 +104,6 @@ void		read_map(t_client *, int, int, char *);
 int 		get_nb_elem(t_client *, char);
 void  		set_window_pos(t_client *);
 void 		create_players(t_client *, SDL_Surface *);
+void    display_score(t_client *, SDL_Surface *, SDL_Color);
 
 #endif /* !CLIENT_H_ */

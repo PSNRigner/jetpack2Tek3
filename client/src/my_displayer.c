@@ -36,6 +36,7 @@ void		puts_dots(t_client *client, SDL_Surface *ecran)
     	}
       i++;
     }
+  SDL_FreeSurface(tmp);
   create_players(client, ecran);
 }
 
@@ -44,8 +45,12 @@ void		create_players(t_client *client, SDL_Surface *ecran)
   SDL_Rect      position;
   SDL_Surface   *player;
   t_player      *tmp;
+  SDL_Color     color;
 
   tmp = client->players;
+  color.r = 255;
+  color.g = 255;
+  color.b = 255;
 
   while  (tmp && client->map)
     {
@@ -59,6 +64,8 @@ void		create_players(t_client *client, SDL_Surface *ecran)
       SDL_BlitSurface(player, NULL, ecran, &position);
       tmp = tmp->next;
     }
+  SDL_FreeSurface(player);
+  display_score(client, ecran, color);
 }
 
 void		my_display(t_client *client)
@@ -80,6 +87,7 @@ void		my_display(t_client *client)
   puts_dots(client, ecran);
   SDL_Flip(ecran);
   my_pause(client, ecran);
+  SDL_FreeSurface(ecran);
   TTF_Quit();
   SDL_Quit();
 }

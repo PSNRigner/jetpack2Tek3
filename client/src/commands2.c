@@ -40,3 +40,32 @@ void	cmd_finish(t_client *client, int ac, char **av)
   close(client->socket_cli);
   exit(EXIT_SUCCESS);
 }
+
+void  display_score(t_client *client, SDL_Surface *ecran, SDL_Color color)
+{
+    TTF_Font    *police;
+    SDL_Surface *texte;
+    SDL_Rect    position;
+    t_player    *tmp;
+    char        str[128];
+
+    position.x = 0;
+    position.y = 0;
+    police = NULL;
+    texte = NULL;
+    tmp = client->players;
+    if (tmp == NULL)
+      return;
+    if ((police = TTF_OpenFont("client/font/arial.ttf", 15)) == NULL)
+      return ;
+    while (tmp)
+    {
+      if (client->id == tmp->id)
+        sprintf(str, "Distance : %.1fm Score : %i", tmp->x, tmp->score);
+      tmp = tmp->next;
+    }
+    texte = TTF_RenderText_Solid(police, str, color);
+    SDL_BlitSurface(texte, NULL, ecran, &position);
+    SDL_FreeSurface(texte);
+    TTF_CloseFont(police);
+}

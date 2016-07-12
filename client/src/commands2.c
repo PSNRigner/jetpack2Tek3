@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Tue Jul 12 09:41:36 2016 loic frasse-mathon
-** Last update Tue Jul 12 12:13:54 2016 loic frasse-mathon
+** Last update Tue Jul 12 12:16:19 2016 loic frasse-mathon
 */
 
 #include "client.h"
@@ -47,7 +47,7 @@ void		display_score(t_client *client, SDL_Surface *ecran,
   SDL_Surface	*texte;
   SDL_Rect	position;
   t_player	*tmp;
-  char	str[128];
+  char		str[128];
 
   position.x = 1;
   position.y = 0;

@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Fri Jul  8 15:58:11 2016 loic frasse-mathon
-** Last update Tue Jul 12 12:46:09 2016 loic frasse-mathon
+** Last update Wed Jul 13 11:32:54 2016 loic frasse-mathon
 */
 
 #include "client.h"
@@ -102,6 +102,7 @@ void		my_display(t_client *client)
   SDL_FreeSurface(ecran);
   TTF_Quit();
   SDL_Quit();
+  exit(0);
 }
 
 void		my_pause(t_client *client, SDL_Surface *ecran)

@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Tue Jul 12 09:41:36 2016 loic frasse-mathon
-** Last update Tue Jul 12 12:16:08 2016 loic frasse-mathon
+** Last update Wed Jul 13 11:29:15 2016 loic frasse-mathon
 */
 
 #include "client.h"
@@ -38,6 +38,30 @@ void	cmd_finish(t_client *client, int ac, char **av)
     printf("You loose!\n");
   close(client->socket_cli);
   exit(EXIT_SUCCESS);
+}
+
+void		cmd_remove(t_client *client, int ac, char **av)
+{
+  t_player	*tmp[2];
+  int		id;
+
+  if (ac != 2)
+    return ;
+  id = atoi(av[1]);
+  tmp[0] = client->players;
+  tmp[1] = NULL;
+  while (tmp[0] && tmp[0]->id != id)
+    {
+      tmp[1] = tmp[0];
+      tmp[0] = tmp[0]->next;
+    }
+  if (!tmp[0])
+    return ;
+  if (tmp[1])
+    tmp[1]->next = tmp[0]->next;
+  else
+    client->players = tmp[0]->next;
+  free(tmp[0]);
 }
 
 void		display_score(t_client *client, SDL_Surface *ecran,

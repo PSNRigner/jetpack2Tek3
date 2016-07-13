@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Fri Jul  8 15:51:20 2016 loic frasse-mathon
-** Last update Tue Jul 12 12:24:42 2016 loic frasse-mathon
+** Last update Wed Jul 13 11:30:31 2016 loic frasse-mathon
 */
 
 #ifndef CLIENT_H_
@@ -25,7 +25,7 @@
 # include <pthread.h>
 
 # define SIZE		19
-# define COMMANDS	6
+# define COMMANDS	7
 # define READ_LEN	4
 # define CHECKC		client->map->data[i[0]][i[1]] == 'c'
 # define CHECKE		client->map->data[i[0]][i[1]] == 'e'
@@ -98,13 +98,14 @@ void		display_map(char **, int, int);
 int		my_strcmp_case(char *, char *);
 void		cmd_id(t_client *, int, char **);
 void		cmd_map(t_client *, int, char **);
+void 		cmd_coin(t_client *, int, char **);
+void 		my_pause(t_client *, SDL_Surface *);
 void		cmd_start(t_client *, int, char **);
 void		cmd_player(t_client *, int, char **);
-void 		cmd_coin(t_client *, int, char **);
 void 		cmd_finish(t_client *, int , char **);
+void 		cmd_remove(t_client *, int , char **);
 void		read_map(t_client *, int, int, char *);
 void 		create_players(t_client *, SDL_Surface *);
-void 		my_pause(t_client *client, SDL_Surface *ecran);
 void		display_score(t_client *, SDL_Surface *, SDL_Color);
 
 #endif /* !CLIENT_H_ */

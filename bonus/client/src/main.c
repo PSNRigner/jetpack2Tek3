@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Fri Jul  8 15:54:36 2016 loic frasse-mathon
-** Last update Mon Jul 11 11:27:49 2016 loic frasse-mathon
+** Last update Wed Jul 13 11:30:22 2016 loic frasse-mathon
 */
 
 #include "client.h"
@@ -85,6 +85,7 @@ int		main(int ac, char **av)
   register_command(client, "player", cmd_player);
   register_command(client, "coin", cmd_coin);
   register_command(client, "finish", cmd_finish);
+  register_command(client, "remove", cmd_remove);
   parse_args(client, ac, av);
   my_connect(client);
 

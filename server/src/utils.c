@@ -5,7 +5,7 @@
 ** Login   <frasse_l@epitech.net>
 ** 
 ** Started on  Thu Jul  7 09:52:48 2016 loic frasse-mathon
-** Last update Tue Jul 12 09:58:09 2016 loic frasse-mathon
+** Last update Wed Jul 13 15:17:06 2016 loic frasse-mathon
 */
 
 #include "server.h"
@@ -99,7 +99,7 @@ int	check_end(t_server *server)
   if (first || second)
     {
       finish(server, first & 1 && second & 1 ? score :
-	     (first && second ? -1 : (second ? server->players->id
+	     (first && second ? score : (second ? server->players->id
 				      : server->players->next->id)));
       return (1);
     }
